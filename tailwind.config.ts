@@ -47,6 +47,9 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        success: "hsl(var(--success))",
+        warning: "hsl(var(--warning))",
+        live: "hsl(var(--live))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -60,13 +63,7 @@ export default {
       },
       boxShadow: {
         card: "var(--shadow-card)",
-      },
-      backgroundImage: {
-        'gradient-primary': 'var(--gradient-primary)',
-        'gradient-accent': 'var(--gradient-accent)',
-      },
-      transitionProperty: {
-        smooth: 'var(--transition-smooth)',
+        lg: "var(--shadow-lg)",
       },
       borderRadius: {
         lg: "var(--radius)",
