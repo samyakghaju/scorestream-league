@@ -1,8 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Trophy, LogOut, Shield } from "lucide-react";
+import { Trophy, LogOut, Shield, BarChart3 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { toast } from "sonner";
 import { useEffect, useState } from "react";
 
 const Navbar = () => {
@@ -43,46 +42,57 @@ const Navbar = () => {
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
-    toast.success("Signed out successfully");
     navigate("/");
   };
 
   return (
-    <nav className="bg-primary text-primary-foreground shadow-lg sticky top-0 z-50">
+    <nav className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          <Link to="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
-            <Trophy className="h-8 w-8" />
-            <span className="text-xl font-bold">Football League</span>
+          <Link to="/" className="flex items-center gap-2">
+            <Trophy className="h-6 w-6 text-accent" />
+            <span className="text-xl font-bold text-foreground">ScoreStream</span>
           </Link>
-          
-          <div className="flex items-center space-x-4">
+
+          <div className="flex items-center gap-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => navigate("/standings")}
+              className="flex items-center gap-2 text-foreground hover:text-accent"
+            >
+              <BarChart3 className="h-4 w-4" />
+              Standings
+            </Button>
+            
+            {isAdmin && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => navigate("/admin")}
+                className="flex items-center gap-2 text-foreground hover:text-accent"
+              >
+                <Shield className="h-4 w-4" />
+                Admin
+              </Button>
+            )}
+            
             {user ? (
-              <>
-                {isAdmin && (
-                  <Button
-                    variant="ghost"
-                    className="text-primary-foreground hover:bg-primary/90"
-                    onClick={() => navigate("/admin")}
-                  >
-                    <Shield className="h-4 w-4 mr-2" />
-                    Admin
-                  </Button>
-                )}
-                <Button
-                  variant="ghost"
-                  className="text-primary-foreground hover:bg-primary/90"
-                  onClick={handleSignOut}
-                >
-                  <LogOut className="h-4 w-4 mr-2" />
-                  Sign Out
-                </Button>
-              </>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleSignOut}
+                className="flex items-center gap-2 text-foreground hover:text-accent"
+              >
+                <LogOut className="h-4 w-4" />
+                Sign Out
+              </Button>
             ) : (
               <Button
                 variant="ghost"
-                className="text-primary-foreground hover:bg-primary/90"
+                size="sm"
                 onClick={() => navigate("/auth")}
+                className="text-foreground hover:text-accent"
               >
                 Sign In
               </Button>
