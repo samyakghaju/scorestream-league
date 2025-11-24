@@ -44,6 +44,65 @@ export type Database = {
         }
         Relationships: []
       }
+      managers: {
+        Row: {
+          age: number | null
+          created_at: string
+          draws: number
+          id: string
+          losses: number
+          matches_managed: number
+          name: string
+          nationality: string | null
+          photo_url: string | null
+          points: number
+          team_id: string | null
+          updated_at: string
+          win_percentage: number | null
+          wins: number
+        }
+        Insert: {
+          age?: number | null
+          created_at?: string
+          draws?: number
+          id?: string
+          losses?: number
+          matches_managed?: number
+          name: string
+          nationality?: string | null
+          photo_url?: string | null
+          points?: number
+          team_id?: string | null
+          updated_at?: string
+          win_percentage?: number | null
+          wins?: number
+        }
+        Update: {
+          age?: number | null
+          created_at?: string
+          draws?: number
+          id?: string
+          losses?: number
+          matches_managed?: number
+          name?: string
+          nationality?: string | null
+          photo_url?: string | null
+          points?: number
+          team_id?: string | null
+          updated_at?: string
+          win_percentage?: number | null
+          wins?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "managers_team_id_fkey"
+            columns: ["team_id"]
+            isOneToOne: true
+            referencedRelation: "teams"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       matches: {
         Row: {
           away_score: number | null

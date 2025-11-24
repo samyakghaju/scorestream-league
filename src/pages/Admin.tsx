@@ -7,6 +7,7 @@ import TeamManagement from "@/components/admin/TeamManagement";
 import PlayerManagement from "@/components/admin/PlayerManagement";
 import MatchManagement from "@/components/admin/MatchManagement";
 import LeagueManagement from "@/components/admin/LeagueManagement";
+import ManagerManagement from "@/components/admin/ManagerManagement";
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -68,10 +69,11 @@ const Admin = () => {
       <div className="container mx-auto py-8 px-4">
         <h1 className="text-3xl font-bold mb-6">Admin Dashboard</h1>
         <Tabs defaultValue="leagues" className="w-full">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-5">
             <TabsTrigger value="leagues">Leagues</TabsTrigger>
             <TabsTrigger value="teams">Teams</TabsTrigger>
             <TabsTrigger value="players">Players</TabsTrigger>
+            <TabsTrigger value="managers">Managers</TabsTrigger>
             <TabsTrigger value="matches">Matches</TabsTrigger>
           </TabsList>
           <TabsContent value="leagues">
@@ -82,6 +84,9 @@ const Admin = () => {
           </TabsContent>
           <TabsContent value="players">
             <PlayerManagement />
+          </TabsContent>
+          <TabsContent value="managers">
+            <ManagerManagement />
           </TabsContent>
           <TabsContent value="matches">
             <MatchManagement />
