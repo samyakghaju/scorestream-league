@@ -21,6 +21,26 @@ const LeagueTable = () => {
 
   useEffect(() => {
     fetchTeams();
+    
+    // Subscribe to realtime updates
+    const channel = supabase
+      .channel('teams-changes')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'teams'
+        },
+        () => {
+          fetchTeams();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, []);
 
   const fetchTeams = async () => {
@@ -28,7 +48,8 @@ const LeagueTable = () => {
       const { data, error } = await supabase
         .from("teams")
         .select("*")
-        .order("points", { ascending: false });
+        .order("points", { ascending: false })
+        .limit(10);
 
       if (error) throw error;
       setTeams(data || []);

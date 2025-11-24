@@ -6,6 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import TeamManagement from "@/components/admin/TeamManagement";
 import PlayerManagement from "@/components/admin/PlayerManagement";
 import MatchManagement from "@/components/admin/MatchManagement";
+import LeagueManagement from "@/components/admin/LeagueManagement";
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -66,12 +67,16 @@ const Admin = () => {
       <Navbar />
       <div className="container mx-auto py-8 px-4">
         <h1 className="text-3xl font-bold mb-6">Admin Dashboard</h1>
-        <Tabs defaultValue="teams" className="w-full">
-          <TabsList className="grid w-full grid-cols-3">
+        <Tabs defaultValue="leagues" className="w-full">
+          <TabsList className="grid w-full grid-cols-4">
+            <TabsTrigger value="leagues">Leagues</TabsTrigger>
             <TabsTrigger value="teams">Teams</TabsTrigger>
             <TabsTrigger value="players">Players</TabsTrigger>
             <TabsTrigger value="matches">Matches</TabsTrigger>
           </TabsList>
+          <TabsContent value="leagues">
+            <LeagueManagement />
+          </TabsContent>
           <TabsContent value="teams">
             <TeamManagement />
           </TabsContent>
