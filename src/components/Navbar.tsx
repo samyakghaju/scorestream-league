@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Trophy, LogOut, Shield, BarChart3 } from "lucide-react";
+import { Trophy, LogOut, Shield, BarChart3, Award } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
 
@@ -63,6 +63,16 @@ const Navbar = () => {
             >
               <BarChart3 className="h-4 w-4" />
               Standings
+            </Button>
+            
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => navigate("/managers")}
+              className="flex items-center gap-2 text-foreground hover:text-accent"
+            >
+              <Award className="h-4 w-4" />
+              Managers
             </Button>
             
             {isAdmin && (
