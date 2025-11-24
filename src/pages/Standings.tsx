@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import Navbar from "@/components/Navbar";
 import { Card } from "@/components/ui/card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Trophy, TrendingUp, TrendingDown, Minus } from "lucide-react";
 
@@ -15,31 +16,67 @@ interface Team {
   goals_against: number;
   points: number;
   logo: string | null;
+  league_id: string | null;
+}
+
+interface League {
+  id: string;
+  name: string;
+  country: string;
+  season: string;
 }
 
 const Standings = () => {
   const [teams, setTeams] = useState<Team[]>([]);
+  const [leagues, setLeagues] = useState<League[]>([]);
+  const [selectedLeague, setSelectedLeague] = useState<string>("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchTeams();
+    fetchLeagues();
   }, []);
+
+  useEffect(() => {
+    if (selectedLeague) {
+      fetchTeams();
+    }
+  }, [selectedLeague]);
+
+  const fetchLeagues = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("leagues")
+        .select("*")
+        .order("name");
+
+      if (error) throw error;
+      setLeagues(data || []);
+      if (data && data.length > 0) {
+        setSelectedLeague(data[0].id);
+      }
+    } catch (error) {
+      console.error("Error fetching leagues:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const fetchTeams = async () => {
     try {
       const { data, error } = await supabase
         .from("teams")
         .select("*")
+        .eq("league_id", selectedLeague)
         .order("points", { ascending: false });
 
       if (error) throw error;
       setTeams(data || []);
     } catch (error) {
       console.error("Error fetching teams:", error);
-    } finally {
-      setLoading(false);
     }
   };
+
+  const currentLeague = leagues.find(l => l.id === selectedLeague);
 
   const getFormIcon = (index: number) => {
     if (index === 0) return <TrendingUp className="w-4 h-4 text-success" />;
@@ -68,7 +105,25 @@ const Standings = () => {
             <Trophy className="w-8 h-8 text-accent" />
             <h1 className="text-3xl font-bold text-foreground">League Standings</h1>
           </div>
-          <p className="text-muted-foreground">Premier League 2024/25</p>
+          <div className="flex items-center gap-4 mt-4">
+            <Select value={selectedLeague} onValueChange={setSelectedLeague}>
+              <SelectTrigger className="w-64">
+                <SelectValue placeholder="Select league" />
+              </SelectTrigger>
+              <SelectContent>
+                {leagues.map((league) => (
+                  <SelectItem key={league.id} value={league.id}>
+                    {league.name} ({league.season})
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            {currentLeague && (
+              <p className="text-muted-foreground">
+                {currentLeague.country} - {currentLeague.season}
+              </p>
+            )}
+          </div>
         </div>
 
         <Card className="overflow-hidden border-border">
@@ -99,9 +154,13 @@ const Standings = () => {
                   </TableCell>
                   <TableCell>
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-muted rounded-full flex items-center justify-center text-xs font-bold">
-                        {team.name.substring(0, 2).toUpperCase()}
-                      </div>
+                      {team.logo ? (
+                        <img src={team.logo} alt={team.name} className="w-8 h-8 object-contain" />
+                      ) : (
+                        <div className="w-8 h-8 bg-muted rounded-full flex items-center justify-center text-xs font-bold">
+                          {team.name.substring(0, 2).toUpperCase()}
+                        </div>
+                      )}
                       <span className="font-semibold text-foreground">{team.name}</span>
                     </div>
                   </TableCell>

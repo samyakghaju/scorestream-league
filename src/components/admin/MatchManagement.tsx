@@ -20,6 +20,7 @@ interface Match {
   match_date: string;
   status: string;
   venue: string;
+  league_id: string | null;
   home_team: { name: string };
   away_team: { name: string };
 }
@@ -29,9 +30,15 @@ interface Team {
   name: string;
 }
 
+interface League {
+  id: string;
+  name: string;
+}
+
 const MatchManagement = () => {
   const [matches, setMatches] = useState<Match[]>([]);
   const [teams, setTeams] = useState<Team[]>([]);
+  const [leagues, setLeagues] = useState<League[]>([]);
   const [open, setOpen] = useState(false);
   const [editingMatch, setEditingMatch] = useState<Match | null>(null);
   const [formData, setFormData] = useState({
@@ -42,11 +49,13 @@ const MatchManagement = () => {
     match_date: new Date().toISOString().slice(0, 16),
     status: "upcoming",
     venue: "",
+    league_id: "",
   });
 
   useEffect(() => {
     fetchMatches();
     fetchTeams();
+    fetchLeagues();
   }, []);
 
   const fetchMatches = async () => {
@@ -64,6 +73,11 @@ const MatchManagement = () => {
   const fetchTeams = async () => {
     const { data } = await supabase.from("teams").select("id, name").order("name");
     setTeams(data || []);
+  };
+
+  const fetchLeagues = async () => {
+    const { data } = await supabase.from("leagues").select("id, name").order("name");
+    setLeagues(data || []);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -99,6 +113,7 @@ const MatchManagement = () => {
         match_date: new Date().toISOString().slice(0, 16),
         status: "upcoming",
         venue: "",
+        league_id: "",
       });
       fetchMatches();
     } catch (error: any) {
@@ -129,6 +144,7 @@ const MatchManagement = () => {
       match_date: new Date(match.match_date).toISOString().slice(0, 16),
       status: match.status,
       venue: match.venue,
+      league_id: match.league_id || "",
     });
     setOpen(true);
   };
@@ -149,6 +165,7 @@ const MatchManagement = () => {
                 match_date: new Date().toISOString().slice(0, 16),
                 status: "upcoming",
                 venue: "",
+                league_id: "",
               });
             }}>
               <Plus className="h-4 w-4 mr-2" />
@@ -160,6 +177,21 @@ const MatchManagement = () => {
               <DialogTitle>{editingMatch ? "Edit Match" : "Add New Match"}</DialogTitle>
             </DialogHeader>
             <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <Label htmlFor="league">League</Label>
+                <Select value={formData.league_id} onValueChange={(value) => setFormData({ ...formData, league_id: value })}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select league" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {leagues.map((league) => (
+                      <SelectItem key={league.id} value={league.id}>
+                        {league.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
               <div>
                 <Label htmlFor="home_team">Home Team</Label>
                 <Select value={formData.home_team_id} onValueChange={(value) => setFormData({ ...formData, home_team_id: value })}>

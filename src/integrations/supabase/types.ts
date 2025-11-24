@@ -14,6 +14,36 @@ export type Database = {
   }
   public: {
     Tables: {
+      leagues: {
+        Row: {
+          country: string | null
+          created_at: string
+          id: string
+          logo: string | null
+          name: string
+          season: string | null
+          updated_at: string
+        }
+        Insert: {
+          country?: string | null
+          created_at?: string
+          id?: string
+          logo?: string | null
+          name: string
+          season?: string | null
+          updated_at?: string
+        }
+        Update: {
+          country?: string | null
+          created_at?: string
+          id?: string
+          logo?: string | null
+          name?: string
+          season?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       matches: {
         Row: {
           away_score: number | null
@@ -22,6 +52,7 @@ export type Database = {
           home_score: number | null
           home_team_id: string | null
           id: string
+          league_id: string | null
           match_date: string
           status: string | null
           updated_at: string | null
@@ -34,6 +65,7 @@ export type Database = {
           home_score?: number | null
           home_team_id?: string | null
           id?: string
+          league_id?: string | null
           match_date: string
           status?: string | null
           updated_at?: string | null
@@ -46,6 +78,7 @@ export type Database = {
           home_score?: number | null
           home_team_id?: string | null
           id?: string
+          league_id?: string | null
           match_date?: string
           status?: string | null
           updated_at?: string | null
@@ -64,6 +97,13 @@ export type Database = {
             columns: ["home_team_id"]
             isOneToOne: false
             referencedRelation: "teams"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "matches_league_id_fkey"
+            columns: ["league_id"]
+            isOneToOne: false
+            referencedRelation: "leagues"
             referencedColumns: ["id"]
           },
         ]
@@ -147,6 +187,7 @@ export type Database = {
           goals_against: number | null
           goals_for: number | null
           id: string
+          league_id: string | null
           logo: string | null
           losses: number | null
           name: string
@@ -162,6 +203,7 @@ export type Database = {
           goals_against?: number | null
           goals_for?: number | null
           id?: string
+          league_id?: string | null
           logo?: string | null
           losses?: number | null
           name: string
@@ -177,6 +219,7 @@ export type Database = {
           goals_against?: number | null
           goals_for?: number | null
           id?: string
+          league_id?: string | null
           logo?: string | null
           losses?: number | null
           name?: string
@@ -185,7 +228,15 @@ export type Database = {
           updated_at?: string | null
           wins?: number | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "teams_league_id_fkey"
+            columns: ["league_id"]
+            isOneToOne: false
+            referencedRelation: "leagues"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       user_roles: {
         Row: {
