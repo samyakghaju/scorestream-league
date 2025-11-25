@@ -40,7 +40,7 @@ const ManagerManagement = () => {
     photo_url: "",
     nationality: "",
     age: 40,
-    team_id: "",
+    team_id: "none",
     wins: 0,
     draws: 0,
     losses: 0,
@@ -68,16 +68,21 @@ const ManagerManagement = () => {
     e.preventDefault();
     
     try {
+      const submitData = {
+        ...formData,
+        team_id: formData.team_id === "none" ? null : formData.team_id
+      };
+
       if (editingManager) {
         const { error } = await supabase
           .from("managers")
-          .update(formData)
+          .update(submitData)
           .eq("id", editingManager.id);
         
         if (error) throw error;
         toast.success("Manager updated successfully");
       } else {
-        const { error } = await supabase.from("managers").insert([formData]);
+        const { error } = await supabase.from("managers").insert([submitData]);
         if (error) throw error;
         toast.success("Manager added successfully");
       }
@@ -89,7 +94,7 @@ const ManagerManagement = () => {
         photo_url: "",
         nationality: "",
         age: 40,
-        team_id: "",
+        team_id: "none",
         wins: 0,
         draws: 0,
         losses: 0,
@@ -123,7 +128,7 @@ const ManagerManagement = () => {
       photo_url: manager.photo_url || "",
       nationality: manager.nationality,
       age: manager.age,
-      team_id: manager.team_id || "",
+      team_id: manager.team_id || "none",
       wins: manager.wins,
       draws: manager.draws,
       losses: manager.losses,
@@ -211,7 +216,7 @@ const ManagerManagement = () => {
                     <SelectValue placeholder="Select team" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">No Team</SelectItem>
+                    <SelectItem value="none">No Team</SelectItem>
                     {teams.map((team) => (
                       <SelectItem key={team.id} value={team.id}>
                         {team.name}
