@@ -90,7 +90,7 @@ const TeamDetails = () => {
       .from("managers")
       .select("*")
       .eq("team_id", id)
-      .single();
+      .maybeSingle();
 
     // Fetch recent matches
     const { data: matchesData } = await supabase

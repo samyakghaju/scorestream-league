@@ -23,6 +23,10 @@ interface Team {
   goals_for: number;
   goals_against: number;
   points: number;
+  manager?: {
+    name: string;
+    photo_url: string | null;
+  } | null;
 }
 
 interface League {
@@ -55,7 +59,13 @@ const TeamManagement = () => {
   }, []);
 
   const fetchTeams = async () => {
-    const { data } = await supabase.from("teams").select("*").order("name");
+    const { data } = await supabase
+      .from("teams")
+      .select(`
+        *,
+        manager:managers(name, photo_url)
+      `)
+      .order("name");
     setTeams(data || []);
   };
 
@@ -290,6 +300,7 @@ const TeamManagement = () => {
               <TableHead>Logo</TableHead>
               <TableHead>Name</TableHead>
               <TableHead>League</TableHead>
+              <TableHead>Manager</TableHead>
               <TableHead>Stadium</TableHead>
               <TableHead className="text-center">Stats</TableHead>
               <TableHead className="text-right">Actions</TableHead>
@@ -311,6 +322,26 @@ const TeamManagement = () => {
                   </TableCell>
                   <TableCell className="font-semibold">{team.name}</TableCell>
                   <TableCell className="text-sm text-muted-foreground">{league?.name || "No League"}</TableCell>
+                  <TableCell>
+                    {team.manager ? (
+                      <div className="flex items-center gap-2">
+                        {team.manager.photo_url ? (
+                          <img 
+                            src={team.manager.photo_url} 
+                            alt={team.manager.name} 
+                            className="w-8 h-8 rounded-full object-cover"
+                          />
+                        ) : (
+                          <div className="w-8 h-8 bg-muted rounded-full flex items-center justify-center text-xs font-bold">
+                            {team.manager.name.substring(0, 2).toUpperCase()}
+                          </div>
+                        )}
+                        <span className="text-sm">{team.manager.name}</span>
+                      </div>
+                    ) : (
+                      <span className="text-sm text-muted-foreground">No Manager</span>
+                    )}
+                  </TableCell>
                   <TableCell>{team.stadium}</TableCell>
                   <TableCell className="text-center text-xs">
                     <div className="space-y-1">
