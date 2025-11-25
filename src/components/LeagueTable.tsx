@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -100,7 +101,11 @@ const LeagueTable = () => {
                 <TableCell className="font-medium">
                   {index + 1}
                 </TableCell>
-                <TableCell className="font-semibold">{team.name}</TableCell>
+                <TableCell className="font-semibold">
+                  <Link to={`/team/${team.id}`} className="hover:text-primary transition-colors">
+                    {team.name}
+                  </Link>
+                </TableCell>
                 <TableCell className="text-center">
                   {team.wins + team.draws + team.losses}
                 </TableCell>

@@ -9,6 +9,7 @@ import Admin from "./pages/Admin";
 import MatchDetails from "./pages/MatchDetails";
 import Standings from "./pages/Standings";
 import Managers from "./pages/Managers";
+import TeamDetails from "./pages/TeamDetails";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -24,6 +25,7 @@ const App = () => (
           <Route path="/auth" element={<Auth />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/match/:id" element={<MatchDetails />} />
+          <Route path="/team/:id" element={<TeamDetails />} />
           <Route path="/standings" element={<Standings />} />
           <Route path="/managers" element={<Managers />} />
           <Route path="*" element={<NotFound />} />
