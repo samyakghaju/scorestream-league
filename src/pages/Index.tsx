@@ -52,7 +52,22 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <Navbar />
       
-      <div className="container mx-auto py-6 px-4">
+      {/* Hero Section */}
+      <div className="relative bg-gradient-primary py-20 px-4 mb-8 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-overlay"></div>
+        <div className="container mx-auto relative z-10">
+          <h1 className="text-5xl md:text-7xl font-black text-white mb-4 tracking-tight">
+            LIVE MATCHES
+          </h1>
+          <p className="text-xl md:text-2xl text-white/90 font-medium">
+            Experience the thrill of football
+          </p>
+        </div>
+        <div className="absolute -bottom-20 -right-20 w-96 h-96 bg-accent/20 rounded-full blur-3xl"></div>
+        <div className="absolute -top-20 -left-20 w-96 h-96 bg-secondary/20 rounded-full blur-3xl"></div>
+      </div>
+      
+      <div className="container mx-auto px-4 pb-12">
         <div className="flex gap-6">
           {/* Sidebar */}
           <aside className="hidden lg:block w-64 flex-shrink-0">
@@ -61,17 +76,12 @@ const Index = () => {
 
           {/* Main content */}
           <main className="flex-1">
-            <div className="mb-6">
-              <h1 className="text-3xl font-bold text-foreground mb-2">Matches</h1>
-              <p className="text-muted-foreground">Live scores and fixtures</p>
-            </div>
-
             <Tabs defaultValue="all" className="w-full">
-              <TabsList className="grid w-full grid-cols-4 bg-card border border-border mb-6">
-                <TabsTrigger value="all">All</TabsTrigger>
-                <TabsTrigger value="live">Live</TabsTrigger>
-                <TabsTrigger value="upcoming">Upcoming</TabsTrigger>
-                <TabsTrigger value="finished">Finished</TabsTrigger>
+              <TabsList className="grid w-full grid-cols-4 bg-card border-2 border-border mb-8 p-1 h-14 rounded-2xl">
+                <TabsTrigger value="all" className="text-base font-bold rounded-xl data-[state=active]:bg-gradient-primary data-[state=active]:text-white">All</TabsTrigger>
+                <TabsTrigger value="live" className="text-base font-bold rounded-xl data-[state=active]:bg-gradient-primary data-[state=active]:text-white">Live</TabsTrigger>
+                <TabsTrigger value="upcoming" className="text-base font-bold rounded-xl data-[state=active]:bg-gradient-primary data-[state=active]:text-white">Upcoming</TabsTrigger>
+                <TabsTrigger value="finished" className="text-base font-bold rounded-xl data-[state=active]:bg-gradient-primary data-[state=active]:text-white">Finished</TabsTrigger>
               </TabsList>
 
               <TabsContent value="all" className="space-y-4">

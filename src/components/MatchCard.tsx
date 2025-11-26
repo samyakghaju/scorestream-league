@@ -33,60 +33,62 @@ const MatchCard = ({
 
   return (
     <Link to={`/match/${id}`}>
-      <Card className="p-4 hover:bg-card/80 transition-colors cursor-pointer border-border">
-        <div className="space-y-3">
+      <Card className="group relative overflow-hidden p-6 hover:shadow-glow transition-all duration-300 cursor-pointer border-2 border-border hover:border-primary/50 bg-gradient-to-br from-card to-card/50">
+        <div className="absolute inset-0 bg-gradient-primary opacity-0 group-hover:opacity-5 transition-opacity duration-300"></div>
+        
+        <div className="relative space-y-4">
           {/* League and status */}
           <div className="flex items-center justify-between">
-            <span className="text-xs text-muted-foreground">{league}</span>
+            <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">{league}</span>
             {isLive && (
-              <Badge variant="default" className="bg-live text-white">
-                <Circle className="w-2 h-2 mr-1 fill-white animate-pulse" />
+              <Badge className="bg-live text-white font-bold px-3 py-1 shadow-lg animate-pulse">
+                <Circle className="w-2 h-2 mr-1 fill-white" />
                 LIVE
               </Badge>
             )}
             {isFinished && (
-              <Badge variant="secondary" className="text-muted-foreground">
+              <Badge variant="secondary" className="font-bold px-3 py-1">
                 FT
               </Badge>
             )}
             {isUpcoming && (
-              <span className="text-xs text-muted-foreground">
+              <span className="text-sm font-bold text-muted-foreground">
                 {format(new Date(matchDate), "HH:mm")}
               </span>
             )}
           </div>
 
           {/* Teams and scores */}
-          <div className="space-y-2">
+          <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3 flex-1">
-                <div className="w-8 h-8 bg-muted rounded-full flex items-center justify-center text-xs font-bold">
+              <div className="flex items-center gap-4 flex-1">
+                <div className="w-12 h-12 bg-gradient-primary rounded-xl flex items-center justify-center text-sm font-black text-white shadow-lg group-hover:scale-110 transition-transform">
                   {homeTeam.substring(0, 2).toUpperCase()}
                 </div>
-                <span className="font-semibold text-foreground">{homeTeam}</span>
+                <span className="font-bold text-lg text-foreground group-hover:text-primary transition-colors">{homeTeam}</span>
               </div>
               {(isLive || isFinished) && (
-                <span className="text-2xl font-bold text-foreground">{homeScore}</span>
+                <span className="text-4xl font-black text-foreground">{homeScore}</span>
               )}
             </div>
 
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3 flex-1">
-                <div className="w-8 h-8 bg-muted rounded-full flex items-center justify-center text-xs font-bold">
+              <div className="flex items-center gap-4 flex-1">
+                <div className="w-12 h-12 bg-gradient-secondary rounded-xl flex items-center justify-center text-sm font-black text-white shadow-lg group-hover:scale-110 transition-transform">
                   {awayTeam.substring(0, 2).toUpperCase()}
                 </div>
-                <span className="font-semibold text-foreground">{awayTeam}</span>
+                <span className="font-bold text-lg text-foreground group-hover:text-primary transition-colors">{awayTeam}</span>
               </div>
               {(isLive || isFinished) && (
-                <span className="text-2xl font-bold text-foreground">{awayScore}</span>
+                <span className="text-4xl font-black text-foreground">{awayScore}</span>
               )}
             </div>
           </div>
 
           {/* Venue */}
           {venue && (
-            <div className="text-xs text-muted-foreground pt-2 border-t border-border">
-              {venue}
+            <div className="text-xs font-medium text-muted-foreground pt-3 border-t border-border/50">
+              📍 {venue}
             </div>
           )}
         </div>
