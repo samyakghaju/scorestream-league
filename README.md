@@ -1,73 +1,39 @@
-# Welcome to your Lovable project
+# 🏆 ScoreStream League – Live Score Tracker
 
-## Project info
+ScoreStream League is a simple web app for tracking match scores in real time.  
+Perfect for small tournaments, leagues, or friendly competitions.
 
-**URL**: https://lovable.dev/projects/a2023584-f1f4-4ce3-ac78-397e495c82df
+🔗 **Live Website:** https://scorestream-league.lovable.app/
 
-## How can I edit this code?
+---
 
-There are several ways of editing your application.
+## 📸 Screenshots  
 
-**Use Lovable**
+### Home / Dashboard
+<img width="1918" height="1078" alt="Screenshot 2025-12-04 174439" src="https://github.com/user-attachments/assets/22e52063-b67a-4ce7-acd5-32586c7b58e6" />
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/a2023584-f1f4-4ce3-ac78-397e495c82df) and start prompting.
+### Match View
+<img width="1918" height="1078" alt="Screenshot 2025-12-04 174458" src="https://github.com/user-attachments/assets/722fa262-d9a8-4cba-aa94-665d205af191" />
 
-Changes made via Lovable will be committed automatically to this repo.
+### Standings
+<img width="1918" height="1078" alt="Screenshot 2025-12-04 174522" src="https://github.com/user-attachments/assets/1114d37c-70b5-4a34-89aa-1a3e31a4cc9a" />
 
-**Use your preferred IDE**
+---
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## ⚽ Features
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+- ✔️ Create and manage matches  
+- ✔️ Live score updates  
+- ✔️ Simple, clean UI  
+- ✔️ Works on any device  
+- ✔️ Great for small leagues and events  
 
-Follow these steps:
+---
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+## 🚀 Run Locally
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/a2023584-f1f4-4ce3-ac78-397e495c82df) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+```bash
+git clone https://github.com/your-username/scorestream-league.git
+cd scorestream-league
+npm install
+npm start
